@@ -1,4 +1,6 @@
-MavenTemplate
+Minecast
 =============
 
-Template for maven based Bukkit plugins.
+Plugin for Minecast.
+
+https://minecast.io
