@@ -31,3 +31,5 @@
 *.ipr
 *.iws
 .idea/
+
+lib/

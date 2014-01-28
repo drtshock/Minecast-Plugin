@@ -82,19 +82,6 @@ public class MinecastAPI {
     }
 
     /**
-     * Send a tweet but ask the user to confirm it first.
-     *
-     * @param user - the user to offer the tweet.
-     * @param tweet - the tweet to offer.
-     * @param confirm - whether or not to ask the user to send.
-     *
-     * @return TweetResult for this attempt.
-     */
-    public static TweetResult sendTweet(String user, String tweet, boolean confirm) {
-        return TweetResult.FAIL_UNKNOWN;
-    }
-
-    /**
      * Send a tweet from a defined user.
      *
      * @param user - the user sending the tweet.
@@ -103,6 +90,18 @@ public class MinecastAPI {
      * @return TweetResult for this attempt.
      */
     public static TweetResult sendTweet(String user, String tweet) {
+        return TweetResult.FAIL_UNKNOWN;
+    }
+
+    /**
+     * Send a tweet from a defined user.
+     *
+     * @param player - the user sending the tweet.
+     * @param tweet - the tweet being sent.
+     *
+     * @return TweetResult for this attempt.
+     */
+    public static TweetResult sendTweet(Player player, String tweet) {
         return TweetResult.FAIL_UNKNOWN;
     }
 

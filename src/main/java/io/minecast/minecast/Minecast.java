@@ -1,10 +1,12 @@
 package io.minecast.minecast;
 
 import io.minecast.minecast.gui.MenuHandler;
+import io.minecast.minecast.listeners.hooks.MobArenaListener;
 import io.minecast.minecast.util.Lang;
 import io.minecast.minecast.util.Metrics;
 import io.minecast.minecast.util.Updater;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -24,6 +26,16 @@ public class Minecast extends JavaPlugin {
         getServer().getPluginManager().registerEvents(MenuHandler.getInstance(), this);
         checkUpdate();
         startMetrics();
+        checkHooks();
+    }
+
+    protected void checkHooks() {
+        if (getConfig().getBoolean("hooks.mobarena", false)) {
+            Plugin mobarena = getServer().getPluginManager().getPlugin("MobArena");
+            if (mobarena != null) {
+                getServer().getPluginManager().registerEvents(new MobArenaListener(), this);
+            }
+        }
     }
 
     protected void checkUpdate() {

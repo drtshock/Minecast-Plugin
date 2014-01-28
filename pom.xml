@@ -45,6 +45,14 @@
             <artifactId>bukkit</artifactId>
             <version>LATEST</version>
         </dependency>
+        <dependency>
+            <groupId>com.garbagemule</groupId>
+            <artifactId>MobArena</artifactId>
+            <version>0.96.2</version>
+            <optional>true</optional>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/MobArena.jar</systemPath>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

@@ -1,6 +1,7 @@
-name: MavenTemplate
-author: drtshock
+name: Minecast
+authors: [drtshock, double0negative, shadowwolf]
 version: ${project.version}
-main: net.drtshock
+main: io.minecast.minecast.Minecast
+softdepend: [Mobarena]
 
     
