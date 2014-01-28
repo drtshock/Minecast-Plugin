@@ -1,9 +1,9 @@
 package io.minecast.minecast;
 
+import io.minecast.minecast.gui.MenuHandler;
 import io.minecast.minecast.util.Lang;
-import io.minecast.minecast.util.MenuHandler;
-
-import org.bukkit.Bukkit;
+import io.minecast.minecast.util.Metrics;
+import io.minecast.minecast.util.Updater;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,15 +12,58 @@ import java.util.logging.Level;
 
 public class Minecast extends JavaPlugin {
 
-    public static YamlConfiguration LANG;
-    public static File LANG_FILE;
+    private static Minecast instance;
+    private boolean update = false;
+    private String name = "";
 
     @Override
     public void onEnable() {
+        instance = this;
         saveDefaultConfig();
         loadLang();
-        Bukkit.getPluginManager().registerEvents(MenuHandler.getInstance(), this);
+        getServer().getPluginManager().registerEvents(MenuHandler.getInstance(), this);
+        checkUpdate();
+        startMetrics();
     }
+
+    protected void checkUpdate() {
+        if (getConfig().getBoolean("check-update", true)) {
+            final Minecast plugin = this;
+            final File file = this.getFile();
+            final Updater.UpdateType updateType = (getConfig().getBoolean("auto-update", true) ? Updater.UpdateType.DEFAULT : Updater.UpdateType.NO_DOWNLOAD);
+            getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
+                @Override
+                public void run() {
+                    Updater updater = new Updater(plugin, 50123, file, updateType, false);
+                    update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
+                    name = updater.getLatestName();
+                    if (updater.getResult() == Updater.UpdateResult.SUCCESS) {
+                        getLogger().log(Level.INFO, "Successfully updated Minecast to version {0} for next restart!", updater.getLatestName());
+                    } else if (updater.getResult() == Updater.UpdateResult.NO_UPDATE) {
+                        getLogger().log(Level.INFO, "We didn't find an update!");
+                    }
+                }
+            });
+        }
+    }
+
+    protected void startMetrics() {
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException ex) {
+            getLogger().warning("Failed to load metrics :(");
+        }
+    }
+
+    public static Minecast getInstance() {
+        return instance;
+    }
+
+    // EVERYTHING BELOW HERE IS FOR LANG FILE PLZ NO TOUCH
+
+    private static YamlConfiguration LANG;
+    private static File LANG_FILE;
 
     public void loadLang() {
         File lang = new File(getDataFolder(), "lang.yml");

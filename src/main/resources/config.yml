@@ -37,6 +37,16 @@ auto-update: true
 check-update: true
 
 # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                      Hooks                      #
+#     Different plugins we can hook to tweet      #
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+hooks:
+  mobarena: false
+
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # #
 #                 Authentication                  #
 #     All info comes from https://minecast.io     #
 # # # # # # # # # # # # # # # # # # # # # # # # # #
