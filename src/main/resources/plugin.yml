@@ -1,0 +1,6 @@
+name: MavenTemplate
+author: drtshock
+version: ${project.version}
+main: net.drtshock
+
+    

@@ -1,0 +1,54 @@
+# # # # # # # # # # # # # # # # # # # #
+#     Minecast Configuration          #
+#    By drtshock and Shadowwolf97     #
+# # # # # # # # # # # # # # # # # # # #
+
+# This plugin needs to be on all servers that you want to send tweets.
+# Tweets will be sent from server -> Minecast -> Twitter.
+
+# Players need to sign up on https://minecast.io if they want
+# tweets to automagically send. It allows the linking of
+# minecraft accounts to Twitter accounts for easy handling
+# and sending of tweets through their Twitter.
+
+# Server Twitter account
+# This should be the handle of your twitter account
+# Will be used to automatically tag you if enabled
+# Do not include @
+handle: drtshock
+
+# Tag your handle in all tweets?
+# If this is enabled, it will trim all tweets
+#     to be the appropriate length to allow
+#     your handle to be tagged at the end.
+always-tag: false
+
+# Auto update
+# This option allows us to check for updates.
+# We recommend always leaving this to true so you can
+# keep up to date with the latest bug fixes.
+auto-update: true
+
+# Check for updates
+# This will allow us to just check for updates
+# and link you to the download and changelog.
+# We advise you to never disable both this and auto updates.
+# If auto-update is set to true then this option will do nothing.
+check-update: true
+
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+#                 Authentication                  #
+#     All info comes from https://minecast.io     #
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Server ID
+server-id:
+
+# API KEY
+# This is your Minecast API key that you get from
+# https://minecast.io
+# Do not give this to anyone
+api-key:
+
+# PUBLIC KEY
+public-key:
