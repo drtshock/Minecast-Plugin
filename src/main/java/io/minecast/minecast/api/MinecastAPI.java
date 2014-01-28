@@ -52,6 +52,11 @@ public class MinecastAPI {
         FAIL_ACCOUNT_LIMIT,
 
         /**
+         * The account has reached its server limit.
+         */
+        FAIL_ACCOUNT_SERVER_LIMIT,
+
+        /**
          * Something went wrong :(
          */
         FAIL_UNKNOWN;
