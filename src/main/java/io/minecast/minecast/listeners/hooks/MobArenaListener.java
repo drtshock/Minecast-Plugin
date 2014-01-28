@@ -7,14 +7,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.Set;
-
 public class MobArenaListener implements Listener {
 
     @EventHandler
     public void onMobArena(ArenaCompleteEvent event) {
-        Set<Player> players = event.getSurvivors();
-        for (Player p : players) {
+        for (Player p : event.getSurvivors()) {
             MinecastAPI.sendTweet(p, Lang.MOBARENA_SURVIVE.toString());
         }
     }
