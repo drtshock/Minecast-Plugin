@@ -1,4 +1,6 @@
-package io.minecase.minecast.util;
+package io.minecast.minecast.util;
+
+import io.minecast.minecast.Minecast;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,16 +19,32 @@ public abstract class GUIMenu {
 	protected String name;
 	protected Player player;
 
+	/**
+	 * Creates a new GUI menu
+	 * @param size vertical size
+	 * @param name name of menu
+	 * @param p player
+	 */
 	public GUIMenu(int size, String name, Player p){
 		this.size = size;
 		this.name = name;
 		this.player = p;
 		items = new ItemStack[9][size];
+		construct();
 	}
 
 
+	/**
+	 * Called by the construtor. Add items to this menu
+	 */
 	public abstract void construct();
 
+	/**
+	 * Set the item at this x,y loc
+	 * @param a
+	 * @param b
+	 * @param item
+	 */
 	public void setItem(int a, int b, ItemStack item){
 		items[a][b] = item;
 	}
@@ -45,7 +63,7 @@ public abstract class GUIMenu {
 	}
 
 	public void showMenu(){
-		Bukkit.getScheduler().scheduleSyncDelayedTask(CLib.getPlugin(), new Runnable(){
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){ //pls fix, dont know how you want to get the plugin instance
 			public void run(){
 				onShow();
 				showMenu0();
@@ -54,6 +72,9 @@ public abstract class GUIMenu {
 
 	}
 	
+	/**
+	 * Called when this menu is shown.
+	 */
 	public abstract void onShow();
 
 	private void showMenu0(){
@@ -71,8 +92,17 @@ public abstract class GUIMenu {
 		MenuHandler.getInstance().registerMenu(player, this);
 	}
 
+	/**
+	 * Called when an item is clicked in this menu. Includes the x,y location and if it was a right click
+	 * @param x
+	 * @param y
+	 * @param right
+	 */
 	public abstract void itemClicked(int x, int y, boolean right);
 
+	/**
+	 * Is called when the menu is closed
+	 */
 	public abstract void menuClosed();
 
 	protected void menuClosed0(){

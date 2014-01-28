@@ -1,6 +1,9 @@
 package io.minecast.minecast;
 
 import io.minecast.minecast.util.Lang;
+import io.minecast.minecast.util.MenuHandler;
+
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,6 +19,7 @@ public class Minecast extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         loadLang();
+        Bukkit.getPluginManager().registerEvents(MenuHandler.getInstance(), this);
     }
 
     public void loadLang() {

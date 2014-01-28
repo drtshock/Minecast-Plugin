@@ -1,4 +1,4 @@
-package io.minecase.minecast.util;
+package io.minecast.minecast.util;
 
 import java.util.HashMap;
 
