@@ -17,12 +17,6 @@
 # Do not include @
 handle: drtshock
 
-# Tag your handle in all tweets?
-# If this is enabled, it will trim all tweets
-#     to be the appropriate length to allow
-#     your handle to be tagged at the end.
-always-tag: false
-
 # Auto update
 # This option allows us to check for updates.
 # We recommend always leaving this to true so you can
@@ -42,6 +36,7 @@ check-update: true
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 hooks:
   mobarena: false
+  mcmmo: false
 
 
 
@@ -51,14 +46,12 @@ hooks:
 #     All info comes from https://minecast.io     #
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Server ID
-server-id:
 
-# API KEY
+# SERVER KEY
 # This is your Minecast API key that you get from
 # https://minecast.io
 # Do not give this to anyone
-api-key:
+server-key:
 
-# PUBLIC KEY
-public-key:
+# Network KEY
+network-key:
