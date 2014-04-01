@@ -55,3 +55,22 @@ server-key:
 
 # Network KEY
 network-key:
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+#                     Language                    #
+#        Configure messages the plugin sends      #
+# # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# PENDING TWEET
+# This message is sent whenever you try to have a player send a tweet.
+# {tweet} - tweet to send.
+pending-tweet:
+  - "&b------------------------------------"
+  - " "
+  - "&7Would you like to tweet:"
+  - "{tweet}"
+  - " "
+  - "&6Type &a/yes &6to confirm or &c/no &6 to cancel."
+  - " "
+  - "&b------------------------------------"

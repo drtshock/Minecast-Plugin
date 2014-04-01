@@ -1,4 +1,4 @@
-package io.minecast.minecast.listeners.hooks;
+package io.minecast.minecast.listeners;
 
 import com.garbagemule.MobArena.events.ArenaCompleteEvent;
 import io.minecast.minecast.api.MinecastAPI;
@@ -12,7 +12,11 @@ public class MobArenaListener implements Listener {
     @EventHandler
     public void onMobArena(ArenaCompleteEvent event) {
         for (Player p : event.getSurvivors()) {
-            MinecastAPI.sendTweet(p, Lang.MOBARENA_SURVIVE.toString());
+            try {
+                MinecastAPI.sendTweet(p, Lang.MOBARENA_SURVIVE.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

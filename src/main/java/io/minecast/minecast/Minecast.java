@@ -1,7 +1,8 @@
 package io.minecast.minecast;
 
-import io.minecast.minecast.gui.MenuHandler;
-import io.minecast.minecast.listeners.hooks.MobArenaListener;
+import io.minecast.minecast.commands.TweetCommand;
+import io.minecast.minecast.listeners.JoinListener;
+import io.minecast.minecast.listeners.MobArenaListener;
 import io.minecast.minecast.util.Lang;
 import io.minecast.minecast.util.Metrics;
 import io.minecast.minecast.util.Updater;
@@ -23,10 +24,11 @@ public class Minecast extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
         loadLang();
-        getServer().getPluginManager().registerEvents(MenuHandler.getInstance(), this);
         checkUpdate();
         startMetrics();
         checkHooks();
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getCommand("tweet").setExecutor(new TweetCommand());
     }
 
     protected void checkHooks() {
@@ -130,28 +132,10 @@ public class Minecast extends JavaPlugin {
         LANG = conf;
         LANG_FILE = lang;
         try {
-            conf.save(getLangFile());
+            conf.save(lang);
         } catch (IOException e) {
             getLogger().log(Level.WARNING, "Minecast: Failed to save lang.yml.");
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Gets the lang.yml config.
-     *
-     * @return The lang.yml config.
-     */
-    public YamlConfiguration getLang() {
-        return LANG;
-    }
-
-    /**
-     * Get the lang.yml file.
-     *
-     * @return The lang.yml file.
-     */
-    public File getLangFile() {
-        return LANG_FILE;
     }
 }

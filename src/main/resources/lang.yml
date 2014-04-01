@@ -1,4 +1,5 @@
-# Lang file for <MavenTemplate>
+# Lang file for Minecast Plugin
 # Use &0-9a-f for colors.
 
-title: "&4[&fMavenTemplate&4]: &r"
+title: "&7Minecast &b<>&r"
+mobarena-survive: "I just survived mob arena on AWESOMESERVER"

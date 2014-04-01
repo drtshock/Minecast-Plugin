@@ -3,5 +3,6 @@ authors: [drtshock, double0negative, shadowwolf]
 version: ${project.version}
 main: io.minecast.minecast.Minecast
 softdepend: [Mobarena]
-
-    
+commands:
+  tweet:
+    permission: minecast.tweet

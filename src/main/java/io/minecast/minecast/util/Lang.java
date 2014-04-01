@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
  * An enum for requesting strings from the language file.
  */
 public enum Lang {
-    TITLE("title", "&bMinecast &9>&r"),
+    TITLE("title", "&7Minecast &b<>&r"),
     MOBARENA_SURVIVE("mobarena-survive", "I just survived a mob arena on AwesomeServer");
 
     private String path;

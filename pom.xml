@@ -46,6 +46,11 @@
             <version>LATEST</version>
         </dependency>
         <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
             <groupId>com.garbagemule</groupId>
             <artifactId>MobArena</artifactId>
             <version>0.96.2</version>
