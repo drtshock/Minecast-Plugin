@@ -3,4 +3,4 @@ Minecast
 
 Plugin for Minecast.
 
-https://minecast.io
+https://www.minecast.io
