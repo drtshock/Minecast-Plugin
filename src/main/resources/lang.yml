@@ -3,3 +3,7 @@
 
 title: "&7Minecast &b<>&r"
 mobarena-survive: "I just survived mob arena on AWESOMESERVER"
+sending-tweet: "&aSending tweet!"
+cancelling-tweet: "&cNot sending tweet"
+failed-tweet: "&cFailed to send that tweet :c"
+no-pending: "&bYou have no pending tweets"

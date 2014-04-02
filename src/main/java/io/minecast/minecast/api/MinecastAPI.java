@@ -14,10 +14,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
 public class MinecastAPI {
+
+    private static HashMap<String, PendingTweet> pendingTweets = new HashMap<>();
 
     /**
      * Give a player a list of tweets that they can send. This will open an inventory interface.
@@ -97,6 +100,7 @@ public class MinecastAPI {
             e.printStackTrace();
         }
 
+        System.out.println("Response: " + sb.toString());
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
@@ -107,7 +111,57 @@ public class MinecastAPI {
         return null;
     }
 
+    public static boolean trustsThisServer(String uuid) {
+        URL url = null;
+        try {
+            url = new URL("https://www.minecast.io/api/v1/" + getKey() + "/trusted/" + uuid.replaceAll("-", ""));
+            System.out.println("Trust: " + url.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        JSONParser parser = new JSONParser();
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(url.openStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Response: " + sb.toString());
+        // parse string
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
+            return (boolean) jsonObject.get(uuid.replaceAll("-", ""));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static String getKey() {
         return Minecast.getInstance().getConfig().getString("server-key");
+    }
+
+    public static boolean hasPendingTweet(String name) {
+        return pendingTweets.containsKey(name);
+    }
+
+    public static PendingTweet getPendingTweet(String name) {
+        return pendingTweets.get(name);
+    }
+
+    public static HashMap<String, PendingTweet> getPendingTweets() {
+        return pendingTweets;
     }
 }

@@ -3,12 +3,10 @@ package io.minecast.minecast.tweet;
 import io.minecast.minecast.Minecast;
 import io.minecast.minecast.api.MinecastAPI;
 import io.minecast.minecast.exceptions.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,16 +19,24 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 
-public class PendingTweet implements Listener {
+public class PendingTweet {
 
     private Player player;
     private String tweet;
 
-    public PendingTweet(Player player, String tweet) {
+    public PendingTweet(final Player player, String tweet) {
         this.player = player;
         this.tweet = tweet;
-        Minecast.getInstance().getServer().getPluginManager().registerEvents(this, Minecast.getInstance());
         show();
+        MinecastAPI.getPendingTweets().put(player.getName(), this);
+        Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (MinecastAPI.hasPendingTweet(player.getName())) {
+                    MinecastAPI.getPendingTweets().remove(player.getName());
+                }
+            }
+        }, 100L);
     }
 
     private void show() {
@@ -47,43 +53,19 @@ public class PendingTweet implements Listener {
         return this.tweet;
     }
 
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent event) {
-        if (event.getPlayer().getName().equalsIgnoreCase(player.getName())) {
-            String cmd = event.getMessage().replace("/", "");
-            if (cmd.equalsIgnoreCase("yes") || cmd.equalsIgnoreCase("y")) {
-                try {
-                    sendTweet(player.getUniqueId().toString(), tweet);
-                    player.sendMessage("Sending tweet!");
-                } catch (Exception e) {
-                    Minecast.getInstance().getLogger().log(Level.SEVERE, "Something went wrong when " + player.getName() + " tried to send a tweet.");
-                    e.printStackTrace();
-                }
-                Minecast.getInstance().getLogger().log(Level.INFO, player.getName() + " sent a tweet!");
-            } else if(cmd.equalsIgnoreCase("no")) {
-                player.sendMessage("Not sending tweet.");
-                Minecast.getInstance().getLogger().log(Level.INFO, player.getName() + " refused to send a tweet.");
-            }
-            event.setCancelled(true);
-        }
-    }
-
     /**
      * Send a tweet from a defined user.
      *
-     * @param uuid - the uuid of the user sending the tweet.
-     * @param tweet - the tweet being sent.
-     *
      * @return TweetResult for this attempt.
      */
-    protected void sendTweet(String uuid, String tweet) throws Exception {
+    public void sendTweet() throws Exception {
         if (MinecastAPI.getKey() == null) {
-            Minecast.getInstance().getLogger().log(Level.WARNING, "Key is null.");
+            Minecast.getInstance().getLogger().log(Level.WARNING, "Cant send tweets while key is null.");
         }
 
-        String urlParameters = null;
-        urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");
-        URL url = new URL("http://minecast.io/api/v1/" + MinecastAPI.getKey() + "/tweet/" + uuid.replaceAll("-", ""));
+        /////////
+        String urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");;
+        URL url = new URL("https://www.minecast.io/api/v1/" + MinecastAPI.getKey() +"/tweet/" + player.getUniqueId().toString().replaceAll("-", ""));
         URLConnection conn = url.openConnection();
 
         conn.setDoOutput(true);
@@ -93,25 +75,23 @@ public class PendingTweet implements Listener {
         writer.write(urlParameters);
         writer.flush();
 
+        String line;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String ret = "";
+        while ((line = reader.readLine()) != null) {
+            ret = ret + line;
+        }
+        writer.close();
+        reader.close();
+
         JSONParser parser = new JSONParser();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        try {
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        System.out.println("Response: " + ret);
         // parse string
         try {
-            JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
+            JSONObject jsonObject = (JSONObject) parser.parse(ret);
 
-            Integer errors = (Integer) jsonObject.get("errors");
+            Integer errors = Integer.valueOf((String) jsonObject.get("errors"));
             if (errors == null) return;
             switch (errors) {
                 case 99:

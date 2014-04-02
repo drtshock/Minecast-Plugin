@@ -1,8 +1,12 @@
 name: Minecast
-authors: [drtshock, double0negative, shadowwolf]
+authors: [drtshock, Shadowwolf97]
 version: ${project.version}
 main: io.minecast.minecast.Minecast
 softdepend: [Mobarena]
 commands:
   tweet:
     permission: minecast.tweet
+  'yes':
+    usage: /<command>
+  'no':
+    usgae: /<command>

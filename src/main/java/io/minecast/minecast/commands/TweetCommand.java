@@ -7,8 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class TweetCommand implements CommandExecutor {
 
     @Override
@@ -22,10 +20,14 @@ public class TweetCommand implements CommandExecutor {
             return true;
         }
 
-        String tweet = args.toString();
-        sender.sendMessage(ChatColor.GRAY + "Tweeting: " + ChatColor.RESET + tweet);
+        StringBuilder sb = new StringBuilder();
+        for (String s : args) {
+            sb.append(s).append(" ");
+        }
+
+        sender.sendMessage(ChatColor.GRAY + "Tweeting: " + ChatColor.RESET + sb.toString().trim());
         try {
-            MinecastAPI.sendTweet((Player) sender, tweet);
+            MinecastAPI.sendTweet((Player) sender, sb.toString().trim());
         } catch (Exception e) {
             e.printStackTrace();
         }

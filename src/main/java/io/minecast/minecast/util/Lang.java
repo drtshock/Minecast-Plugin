@@ -8,7 +8,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public enum Lang {
     TITLE("title", "&7Minecast &b<>&r"),
-    MOBARENA_SURVIVE("mobarena-survive", "I just survived a mob arena on AwesomeServer");
+    MOBARENA_SURVIVE("mobarena-survive", "I just survived a mob arena on AwesomeServer"),
+    SENDING_TWEET("sending-tweet", "&aSending tweet!"),
+    CANCELLING_TWEET("cancelling-tweet", "&cNot sending tweet"),
+    FAILED_SENDING("failed-sending", "&cFailed to send tweet :c"),
+    NO_PENDING("no-pending", "&bYou no no pending tweets");
 
     private String path;
     private String def;

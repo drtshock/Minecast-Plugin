@@ -11,6 +11,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
+        if(MinecastAPI.trustsThisServer(event.getPlayer().getUniqueId().toString())) return;
         Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
             @Override
             public void run() {

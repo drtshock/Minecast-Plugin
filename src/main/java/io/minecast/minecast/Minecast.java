@@ -1,5 +1,6 @@
 package io.minecast.minecast;
 
+import io.minecast.minecast.commands.ConfirmCommand;
 import io.minecast.minecast.commands.TweetCommand;
 import io.minecast.minecast.listeners.JoinListener;
 import io.minecast.minecast.listeners.MobArenaListener;
@@ -28,7 +29,12 @@ public class Minecast extends JavaPlugin {
         startMetrics();
         checkHooks();
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
+
+        // Commands
         getCommand("tweet").setExecutor(new TweetCommand());
+        ConfirmCommand confirmCommand = new ConfirmCommand();
+        getCommand("yes").setExecutor(confirmCommand);
+        getCommand("no").setExecutor(confirmCommand);
     }
 
     protected void checkHooks() {
