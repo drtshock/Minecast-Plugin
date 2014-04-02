@@ -9,4 +9,4 @@ commands:
   'yes':
     usage: /<command>
   'no':
-    usgae: /<command>
+    usage: /<command>
