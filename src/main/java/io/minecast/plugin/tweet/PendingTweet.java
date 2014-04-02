@@ -1,18 +1,16 @@
-package io.minecast.minecast.tweet;
+package io.minecast.plugin.tweet;
 
-import io.minecast.minecast.Minecast;
-import io.minecast.minecast.api.MinecastAPI;
-import io.minecast.minecast.exceptions.*;
+import io.minecast.plugin.Minecast;
+import io.minecast.plugin.api.MinecastAPI;
+import io.minecast.plugin.exceptions.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -24,6 +22,12 @@ public class PendingTweet {
     private Player player;
     private String tweet;
 
+    /**
+     * Creates a new PendingTweet for the user. Server will ask user to confirm.
+     *
+     * @param player - player that's tweeting.
+     * @param tweet - tweet being sent.
+     */
     public PendingTweet(final Player player, String tweet) {
         this.player = player;
         this.tweet = tweet;
@@ -36,7 +40,7 @@ public class PendingTweet {
                     MinecastAPI.getPendingTweets().remove(player.getName());
                 }
             }
-        }, 100L);
+        }, Minecast.getInstance().getConfig().getLong("tweet-expire", 100L));
     }
 
     private void show() {
@@ -63,9 +67,9 @@ public class PendingTweet {
             Minecast.getInstance().getLogger().log(Level.WARNING, "Cant send tweets while key is null.");
         }
 
-        /////////
-        String urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");;
-        URL url = new URL("https://www.minecast.io/api/v1/" + MinecastAPI.getKey() +"/tweet/" + player.getUniqueId().toString().replaceAll("-", ""));
+        String urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");
+        ;
+        URL url = new URL("https://www.minecast.io/api/v1/" + MinecastAPI.getKey() + "/tweet/" + player.getUniqueId().toString().replaceAll("-", ""));
         URLConnection conn = url.openConnection();
 
         conn.setDoOutput(true);
@@ -86,10 +90,10 @@ public class PendingTweet {
 
         JSONParser parser = new JSONParser();
 
-        System.out.println("Response: " + ret);
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(ret);
+            if (!jsonObject.containsValue("errors")) return;
 
             Integer errors = Integer.valueOf((String) jsonObject.get("errors"));
             if (errors == null) return;

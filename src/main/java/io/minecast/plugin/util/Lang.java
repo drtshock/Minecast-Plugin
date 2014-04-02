@@ -1,4 +1,4 @@
-package io.minecast.minecast.util;
+package io.minecast.plugin.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,7 +12,8 @@ public enum Lang {
     SENDING_TWEET("sending-tweet", "&aSending tweet!"),
     CANCELLING_TWEET("cancelling-tweet", "&cNot sending tweet"),
     FAILED_SENDING("failed-sending", "&cFailed to send tweet :c"),
-    NO_PENDING("no-pending", "&bYou no no pending tweets");
+    NO_PENDING("no-pending", "&bYou no no pending tweets"),
+    REGISTER("register", "Make sure to add this server as trusted in Minecast! {url}");
 
     private String path;
     private String def;

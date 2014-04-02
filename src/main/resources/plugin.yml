@@ -1,7 +1,7 @@
 name: Minecast
 authors: [drtshock, Shadowwolf97]
 version: ${project.version}
-main: io.minecast.minecast.Minecast
+main: io.minecast.plugin.Minecast
 softdepend: [Mobarena]
 commands:
   tweet:

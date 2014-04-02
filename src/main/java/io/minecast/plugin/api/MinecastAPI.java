@@ -1,7 +1,7 @@
-package io.minecast.minecast.api;
+package io.minecast.plugin.api;
 
-import io.minecast.minecast.Minecast;
-import io.minecast.minecast.tweet.PendingTweet;
+import io.minecast.plugin.Minecast;
+import io.minecast.plugin.tweet.PendingTweet;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -74,6 +74,11 @@ public class MinecastAPI {
         return new PendingTweet(player, tweet);
     }
 
+    /**
+     * Get the URL to add this server as trusted.
+     *
+     * @return
+     */
     public static String getTrustedURL() {
         URL url = null;
         try {
@@ -100,7 +105,6 @@ public class MinecastAPI {
             e.printStackTrace();
         }
 
-        System.out.println("Response: " + sb.toString());
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
@@ -111,11 +115,17 @@ public class MinecastAPI {
         return null;
     }
 
+    /**
+     * Gets whether or not this user from uuid trusts this server to tweet for them.
+     *
+     * @param uuid - uuid of user.
+     *
+     * @return true if trusted, otherwise false.
+     */
     public static boolean trustsThisServer(String uuid) {
         URL url = null;
         try {
             url = new URL("https://www.minecast.io/api/v1/" + getKey() + "/trusted/" + uuid.replaceAll("-", ""));
-            System.out.println("Trust: " + url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -138,7 +148,6 @@ public class MinecastAPI {
             e.printStackTrace();
         }
 
-        System.out.println("Response: " + sb.toString());
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
@@ -149,18 +158,42 @@ public class MinecastAPI {
         }
     }
 
+    /**
+     * Get the server key. Used to post API requests.
+     *
+     * @return server key as String.
+     */
     public static String getKey() {
         return Minecast.getInstance().getConfig().getString("server-key");
     }
 
+    /**
+     * Get if a user has a pending tweet.
+     *
+     * @param name - name of user.
+     *
+     * @return - true if has pending tweet, otherwise false.
+     */
     public static boolean hasPendingTweet(String name) {
         return pendingTweets.containsKey(name);
     }
 
+    /**
+     * Get a users pending tweet.
+     *
+     * @param name - name of user.
+     *
+     * @return pending tweet.
+     */
     public static PendingTweet getPendingTweet(String name) {
         return pendingTweets.get(name);
     }
 
+    /**
+     * Get the map of users with pending tweets.
+     *
+     * @return - map of usernames and pending tweets.
+     */
     public static HashMap<String, PendingTweet> getPendingTweets() {
         return pendingTweets;
     }

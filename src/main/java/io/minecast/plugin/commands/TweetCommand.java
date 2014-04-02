@@ -1,6 +1,6 @@
-package io.minecast.minecast.commands;
+package io.minecast.plugin.commands;
 
-import io.minecast.minecast.api.MinecastAPI;
+import io.minecast.plugin.api.MinecastAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

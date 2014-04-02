@@ -30,6 +30,12 @@ auto-update: true
 # If auto-update is set to true then this option will do nothing.
 check-update: true
 
+# TWEET EXPIRE
+# Once a new PendingTweet object is created, how long does a user have to confirm
+#   sending the tweet?
+# Length in tickets. 100 = 5 seconds.
+tweet-expire: 100
+
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                      Hooks                      #
 #     Different plugins we can hook to tweet      #

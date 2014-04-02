@@ -1,8 +1,8 @@
-package io.minecast.minecast.listeners;
+package io.minecast.plugin.listeners;
 
 import com.garbagemule.MobArena.events.ArenaCompleteEvent;
-import io.minecast.minecast.api.MinecastAPI;
-import io.minecast.minecast.util.Lang;
+import io.minecast.plugin.api.MinecastAPI;
+import io.minecast.plugin.util.Lang;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

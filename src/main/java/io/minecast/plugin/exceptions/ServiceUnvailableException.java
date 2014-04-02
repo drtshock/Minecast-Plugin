@@ -1,4 +1,4 @@
-package io.minecast.minecast.exceptions;
+package io.minecast.plugin.exceptions;
 
 public class ServiceUnvailableException extends Exception {
 

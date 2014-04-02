@@ -1,7 +1,8 @@
-package io.minecast.minecast.listeners;
+package io.minecast.plugin.listeners;
 
-import io.minecast.minecast.Minecast;
-import io.minecast.minecast.api.MinecastAPI;
+import io.minecast.plugin.Minecast;
+import io.minecast.plugin.api.MinecastAPI;
+import io.minecast.plugin.util.Lang;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -11,12 +12,11 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
-        if(MinecastAPI.trustsThisServer(event.getPlayer().getUniqueId().toString())) return;
+        if (MinecastAPI.trustsThisServer(event.getPlayer().getUniqueId().toString())) return;
         Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
             @Override
             public void run() {
-                event.getPlayer().sendMessage("Make sure to register this server as a trusted server on Minecast!");
-                event.getPlayer().sendMessage(MinecastAPI.getTrustedURL());
+                event.getPlayer().sendMessage(Lang.TITLE.toString() + Lang.REGISTER.toString().replace("{url}", MinecastAPI.getTrustedURL()));
             }
         }, 40L);
     }

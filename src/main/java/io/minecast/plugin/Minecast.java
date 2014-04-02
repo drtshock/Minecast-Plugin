@@ -1,12 +1,12 @@
-package io.minecast.minecast;
+package io.minecast.plugin;
 
-import io.minecast.minecast.commands.ConfirmCommand;
-import io.minecast.minecast.commands.TweetCommand;
-import io.minecast.minecast.listeners.JoinListener;
-import io.minecast.minecast.listeners.MobArenaListener;
-import io.minecast.minecast.util.Lang;
-import io.minecast.minecast.util.Metrics;
-import io.minecast.minecast.util.Updater;
+import io.minecast.plugin.commands.ConfirmCommand;
+import io.minecast.plugin.commands.TweetCommand;
+import io.minecast.plugin.listeners.JoinListener;
+import io.minecast.plugin.listeners.MobArenaListener;
+import io.minecast.plugin.util.Lang;
+import io.minecast.plugin.util.Metrics;
+import io.minecast.plugin.util.Updater;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
