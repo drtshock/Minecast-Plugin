@@ -42,8 +42,6 @@ tweet-expire: 100
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 hooks:
   mobarena: false
-  mcmmo: false
-
 
 
 
