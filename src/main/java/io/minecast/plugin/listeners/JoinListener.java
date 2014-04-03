@@ -9,24 +9,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.logging.Level;
-
 public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
-        try {
-            String uuid = MojangUtil.getUUID(event.getPlayer().getName()).replaceAll("-", "");
-            if (Minecast.getInstance().getConfig().getBoolean("trust-on-join", false) && !MinecastAPI.trustsThisServer(uuid)) {
-                Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        event.getPlayer().sendMessage(Lang.TITLE.toString() + Lang.REGISTER.toString().replace("{url}", MinecastAPI.getTrustedURL()));
-                    }
-                }, 40L);
-            }
-        } catch (Exception e) {
-            Minecast.getInstance().getLogger().log(Level.SEVERE, "Failed to retrieve UUID for " + event.getPlayer().getName());
+        String uuid = MojangUtil.getUUID(event.getPlayer().getName()).replaceAll("-", "");
+        if (Minecast.getInstance().getConfig().getBoolean("trust-on-join", false) && !MinecastAPI.trustsThisServer(uuid)) {
+            Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
+                @Override
+                public void run() {
+                    event.getPlayer().sendMessage(Lang.TITLE.toString() + Lang.REGISTER.toString().replace("{url}", MinecastAPI.getTrustedURL()));
+                }
+            }, 40L);
         }
     }
 }
