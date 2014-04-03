@@ -21,6 +21,7 @@ import java.util.logging.Level;
 public class MinecastAPI {
 
     private static HashMap<String, PendingTweet> pendingTweets = new HashMap<>();
+    private static String trustedURL;
 
     /**
      * Give a player a list of tweets that they can send. This will open an inventory interface.
@@ -80,6 +81,8 @@ public class MinecastAPI {
      * @return
      */
     public static String getTrustedURL() {
+        if (trustedURL != null) return trustedURL;
+
         URL url = null;
         try {
             url = new URL("https://minecast.io/api/v1/" + getKey() + "/trust_url");
@@ -108,7 +111,8 @@ public class MinecastAPI {
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
-            return (String) jsonObject.get("url");
+            trustedURL = (String) jsonObject.get("url");
+            return trustedURL;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -123,6 +127,10 @@ public class MinecastAPI {
      * @return true if trusted, otherwise false.
      */
     public static boolean trustsThisServer(String uuid) {
+        Minecast.getInstance().getLogger().log(Level.SEVERE, "UUID is: " + uuid);
+        if (uuid == null) {
+            return false;
+        }
         URL url = null;
         try {
             url = new URL("https://www.minecast.io/api/v1/" + getKey() + "/trusted/" + uuid.replaceAll("-", ""));
@@ -151,6 +159,10 @@ public class MinecastAPI {
         // parse string
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
+            if (jsonObject == null || !jsonObject.containsKey(uuid.replaceAll("-", ""))) {
+                Minecast.getInstance().getLogger().log(Level.SEVERE, "JsonObject is null or not valid.");
+                return false;
+            }
             return (boolean) jsonObject.get(uuid.replaceAll("-", ""));
         } catch (ParseException e) {
             e.printStackTrace();

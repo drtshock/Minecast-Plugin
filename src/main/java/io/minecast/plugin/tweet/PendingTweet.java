@@ -2,6 +2,7 @@ package io.minecast.plugin.tweet;
 
 import io.minecast.plugin.Minecast;
 import io.minecast.plugin.api.MinecastAPI;
+import io.minecast.plugin.api.MojangUtil;
 import io.minecast.plugin.exceptions.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,6 +22,7 @@ public class PendingTweet {
 
     private Player player;
     private String tweet;
+    private String uuid;
 
     /**
      * Creates a new PendingTweet for the user. Server will ask user to confirm.
@@ -31,6 +33,7 @@ public class PendingTweet {
     public PendingTweet(final Player player, String tweet) {
         this.player = player;
         this.tweet = tweet;
+        this.uuid = MojangUtil.getUUID(player.getName()).replaceAll("-", "");
         show();
         MinecastAPI.getPendingTweets().put(player.getName(), this);
         Minecast.getInstance().getServer().getScheduler().runTaskLater(Minecast.getInstance(), new BukkitRunnable() {
@@ -68,8 +71,7 @@ public class PendingTweet {
         }
 
         String urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");
-        ;
-        URL url = new URL("https://www.minecast.io/api/v1/" + MinecastAPI.getKey() + "/tweet/" + player.getUniqueId().toString().replaceAll("-", ""));
+        URL url = new URL("https://www.minecast.io/api/v1/" + MinecastAPI.getKey() + "/tweet/" + uuid);
         URLConnection conn = url.openConnection();
 
         conn.setDoOutput(true);

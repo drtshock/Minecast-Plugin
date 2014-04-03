@@ -36,6 +36,12 @@ check-update: true
 # Length in tickets. 100 = 5 seconds.
 tweet-expire: 100
 
+# Trust
+# Should we check if a player trusts this server to tweet for them every time they join?
+# This queries our API *every* time a player joins this server.
+# You can get the trusted URL and then add it to your website or something else if you'd like.
+trust-on-join: false
+
 # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                      Hooks                      #
 #     Different plugins we can hook to tweet      #

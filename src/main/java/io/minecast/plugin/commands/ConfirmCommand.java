@@ -37,6 +37,7 @@ public class ConfirmCommand implements CommandExecutor {
             } catch (Exception e) {
                 player.sendMessage(Lang.TITLE.toString() + Lang.FAILED_SENDING.toString());
                 Minecast.getInstance().getLogger().log(Level.SEVERE, "Failed to send tweet for " + player.getName() + " : " + e.getMessage());
+                e.printStackTrace();
             }
 
         } else if (cmd.getName().equalsIgnoreCase("no")) {
