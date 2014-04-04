@@ -54,7 +54,7 @@ public class Minecast extends JavaPlugin {
             getServer().getScheduler().runTaskAsynchronously(this, new Runnable() {
                 @Override
                 public void run() {
-                    Updater updater = new Updater(plugin, 50123, file, updateType, false);
+                    Updater updater = new Updater(plugin, 77361, file, updateType, false);
                     update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
                     name = updater.getLatestName();
                     if (updater.getResult() == Updater.UpdateResult.SUCCESS) {
