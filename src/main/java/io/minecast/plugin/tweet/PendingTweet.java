@@ -4,6 +4,7 @@ import io.minecast.plugin.Minecast;
 import io.minecast.plugin.api.MinecastAPI;
 import io.minecast.plugin.api.MojangUtil;
 import io.minecast.plugin.exceptions.*;
+import io.minecast.plugin.util.Lang;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -68,6 +69,17 @@ public class PendingTweet {
     public void sendTweet() throws Exception {
         if (MinecastAPI.getKey() == null) {
             Minecast.getInstance().getLogger().log(Level.WARNING, "Cant send tweets while key is null.");
+        }
+
+        if (!MinecastAPI.trustsThisServer(getPlayer().getUniqueId().toString().replaceAll("-", ""))) {
+            Minecast.getInstance().getServer().getScheduler().runTaskAsynchronously(Minecast.getInstance(), new BukkitRunnable() {
+                @Override
+                public void run() {
+                    getPlayer().sendMessage(Lang.TITLE.toString() + Lang.FAILED_SENDING.toString());
+                    getPlayer().sendMessage(Lang.TITLE.toString() + Lang.REGISTER.toString().replace("{url}", MinecastAPI.getTrustedURL()));
+                }
+            });
+            return;
         }
 
         String urlParameters = "tweet=" + java.net.URLEncoder.encode(tweet, "UTF-8");

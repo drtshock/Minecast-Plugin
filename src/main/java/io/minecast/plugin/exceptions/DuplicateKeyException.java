@@ -3,6 +3,6 @@ package io.minecast.plugin.exceptions;
 public class DuplicateKeyException extends Exception {
 
     public DuplicateKeyException() {
-        super("Really not sure what this is supposed to be.");
+        super("Multiple server keys have collided... Please contact support@minecast.io to get your server key replaced.");
     }
 }

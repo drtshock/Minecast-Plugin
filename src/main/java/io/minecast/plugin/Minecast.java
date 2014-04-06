@@ -80,7 +80,7 @@ public class Minecast extends JavaPlugin {
         return instance;
     }
 
-    // EVERYTHING BELOW HERE IS FOR LANG FILE PLZ NO TOUCH
+    // EVERYTHING BELOW HERE IS FOR LANG FILE PLZ NO TOUCH .touch.
 
     private static YamlConfiguration LANG;
     private static File LANG_FILE;
